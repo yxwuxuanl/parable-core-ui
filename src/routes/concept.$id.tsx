@@ -5,7 +5,7 @@ import { PhoneFrame, CapsuleSafeArea } from "@/components/AppShell";
 import { IllustrationBy, BrushLine, LeafMark } from "@/components/illustrations";
 import { getStory, getConcept, CONCEPTS } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/story/$id/concept")({
+export const Route = createFileRoute("/concept/$id")({
   validateSearch: z.object({
     guessed: z.string().optional(),
   }),

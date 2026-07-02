@@ -13,7 +13,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as CollectionRouteImport } from './routes/collection'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
-import { Route as StoryIdConceptRouteImport } from './routes/story.$id.concept'
+import { Route as ConceptIdRouteImport } from './routes/concept.$id'
 
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
@@ -35,58 +35,54 @@ const StoryIdRoute = StoryIdRouteImport.update({
   path: '/story/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StoryIdConceptRoute = StoryIdConceptRouteImport.update({
-  id: '/concept',
-  path: '/concept',
-  getParentRoute: () => StoryIdRoute,
+const ConceptIdRoute = ConceptIdRouteImport.update({
+  id: '/concept/$id',
+  path: '/concept/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/collection': typeof CollectionRoute
   '/search': typeof SearchRoute
-  '/story/$id': typeof StoryIdRouteWithChildren
-  '/story/$id/concept': typeof StoryIdConceptRoute
+  '/concept/$id': typeof ConceptIdRoute
+  '/story/$id': typeof StoryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/collection': typeof CollectionRoute
   '/search': typeof SearchRoute
-  '/story/$id': typeof StoryIdRouteWithChildren
-  '/story/$id/concept': typeof StoryIdConceptRoute
+  '/concept/$id': typeof ConceptIdRoute
+  '/story/$id': typeof StoryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/collection': typeof CollectionRoute
   '/search': typeof SearchRoute
-  '/story/$id': typeof StoryIdRouteWithChildren
-  '/story/$id/concept': typeof StoryIdConceptRoute
+  '/concept/$id': typeof ConceptIdRoute
+  '/story/$id': typeof StoryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/collection'
-    | '/search'
-    | '/story/$id'
-    | '/story/$id/concept'
+  fullPaths: '/' | '/collection' | '/search' | '/concept/$id' | '/story/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/collection' | '/search' | '/story/$id' | '/story/$id/concept'
+  to: '/' | '/collection' | '/search' | '/concept/$id' | '/story/$id'
   id:
     | '__root__'
     | '/'
     | '/collection'
     | '/search'
+    | '/concept/$id'
     | '/story/$id'
-    | '/story/$id/concept'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CollectionRoute: typeof CollectionRoute
   SearchRoute: typeof SearchRoute
-  StoryIdRoute: typeof StoryIdRouteWithChildren
+  ConceptIdRoute: typeof ConceptIdRoute
+  StoryIdRoute: typeof StoryIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -119,43 +115,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StoryIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/story/$id/concept': {
-      id: '/story/$id/concept'
-      path: '/concept'
-      fullPath: '/story/$id/concept'
-      preLoaderRoute: typeof StoryIdConceptRouteImport
-      parentRoute: typeof StoryIdRoute
+    '/concept/$id': {
+      id: '/concept/$id'
+      path: '/concept/$id'
+      fullPath: '/concept/$id'
+      preLoaderRoute: typeof ConceptIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
-
-interface StoryIdRouteChildren {
-  StoryIdConceptRoute: typeof StoryIdConceptRoute
-}
-
-const StoryIdRouteChildren: StoryIdRouteChildren = {
-  StoryIdConceptRoute: StoryIdConceptRoute,
-}
-
-const StoryIdRouteWithChildren =
-  StoryIdRoute._addFileChildren(StoryIdRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CollectionRoute: CollectionRoute,
   SearchRoute: SearchRoute,
-  StoryIdRoute: StoryIdRouteWithChildren,
+  ConceptIdRoute: ConceptIdRoute,
+  StoryIdRoute: StoryIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
