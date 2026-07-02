@@ -52,7 +52,7 @@ function ConceptPage() {
           borderBottom: "1px solid color-mix(in oklch, var(--ink-faint) 18%, transparent)",
         }}
       >
-        <Link to="/story/$id" params={{ id }} style={{ color: "var(--ink)" }}>
+        <Link to="/story/$id" params={{ id }} search={{ from: undefined, guessed: undefined }} style={{ color: "var(--ink)" }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 6 L 9 12 L 15 18" />
           </svg>

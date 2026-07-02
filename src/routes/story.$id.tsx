@@ -148,8 +148,7 @@ function StoryPage() {
           <button
             onClick={() => {
               if (from === "concept") {
-                // Skip guess for concept-entry
-                window.location.href = `/story/${story.id}/concept`;
+                window.location.href = `/concept/${story.id}`;
               } else {
                 setShowSheet(true);
               }
@@ -284,7 +283,7 @@ function GuessSheet({ storyId, onClose }: { storyId: string; onClose: () => void
             onClick={() => {
               if (!picked) return;
               navigate({
-                to: "/story/$id/concept",
+                to: "/concept/$id",
                 params: { id: story.id },
                 search: { guessed: picked },
               });
