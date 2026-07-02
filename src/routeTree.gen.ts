@@ -9,38 +9,102 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as CollectionRouteImport } from './routes/collection'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StoryIdRouteImport } from './routes/story.$id'
+import { Route as StoryIdConceptRouteImport } from './routes/story.$id.concept'
 
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionRoute = CollectionRouteImport.update({
+  id: '/collection',
+  path: '/collection',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StoryIdRoute = StoryIdRouteImport.update({
+  id: '/story/$id',
+  path: '/story/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoryIdConceptRoute = StoryIdConceptRouteImport.update({
+  id: '/concept',
+  path: '/concept',
+  getParentRoute: () => StoryIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/collection': typeof CollectionRoute
+  '/search': typeof SearchRoute
+  '/story/$id': typeof StoryIdRouteWithChildren
+  '/story/$id/concept': typeof StoryIdConceptRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/collection': typeof CollectionRoute
+  '/search': typeof SearchRoute
+  '/story/$id': typeof StoryIdRouteWithChildren
+  '/story/$id/concept': typeof StoryIdConceptRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/collection': typeof CollectionRoute
+  '/search': typeof SearchRoute
+  '/story/$id': typeof StoryIdRouteWithChildren
+  '/story/$id/concept': typeof StoryIdConceptRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/collection'
+    | '/search'
+    | '/story/$id'
+    | '/story/$id/concept'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/collection' | '/search' | '/story/$id' | '/story/$id/concept'
+  id:
+    | '__root__'
+    | '/'
+    | '/collection'
+    | '/search'
+    | '/story/$id'
+    | '/story/$id/concept'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CollectionRoute: typeof CollectionRoute
+  SearchRoute: typeof SearchRoute
+  StoryIdRoute: typeof StoryIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collection': {
+      id: '/collection'
+      path: '/collection'
+      fullPath: '/collection'
+      preLoaderRoute: typeof CollectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +112,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/story/$id': {
+      id: '/story/$id'
+      path: '/story/$id'
+      fullPath: '/story/$id'
+      preLoaderRoute: typeof StoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/story/$id/concept': {
+      id: '/story/$id/concept'
+      path: '/concept'
+      fullPath: '/story/$id/concept'
+      preLoaderRoute: typeof StoryIdConceptRouteImport
+      parentRoute: typeof StoryIdRoute
+    }
   }
 }
 
+interface StoryIdRouteChildren {
+  StoryIdConceptRoute: typeof StoryIdConceptRoute
+}
+
+const StoryIdRouteChildren: StoryIdRouteChildren = {
+  StoryIdConceptRoute: StoryIdConceptRoute,
+}
+
+const StoryIdRouteWithChildren =
+  StoryIdRoute._addFileChildren(StoryIdRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CollectionRoute: CollectionRoute,
+  SearchRoute: SearchRoute,
+  StoryIdRoute: StoryIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
