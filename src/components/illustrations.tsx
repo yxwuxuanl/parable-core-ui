@@ -3,7 +3,7 @@
  * All strokes use currentColor so callers can tint via text-*.
  * Wash tints use CSS variables.
  */
-import type { SVGProps } from "react";
+import type { ReactElement, SVGProps } from "react";
 
 type Props = SVGProps<SVGSVGElement> & { tint?: string };
 
@@ -137,7 +137,7 @@ export function GateIllustration({ tint = "var(--blush)", ...p }: Props) {
 }
 
 export function IllustrationBy({ kind, className, tint }: { kind: string; className?: string; tint?: string }) {
-  const map: Record<string, (p: Props) => JSX.Element> = {
+  const map: Record<string, (p: Props) => ReactElement> = {
     path: PathIllustration,
     crowd: CrowdIllustration,
     seed: SeedIllustration,
@@ -160,8 +160,8 @@ export function BrushLine({ className }: { className?: string }) {
 
 export function LeafMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden {...strokeProps as never}>
-      <path d="M4 20 C 8 8 16 6 20 4 C 18 12 12 18 4 20 Z" fill="none" stroke="currentColor" strokeWidth="1.25" />
+    <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      <path d="M4 20 C 8 8 16 6 20 4 C 18 12 12 18 4 20 Z" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M4 20 L 14 10" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5" />
     </svg>
   );
