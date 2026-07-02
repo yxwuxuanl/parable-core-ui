@@ -263,19 +263,13 @@ function Section({ label, children }: { label: string; children: React.ReactNode
     <section className="px-6 mt-8">
       <div className="mb-3 flex items-center gap-2">
         <span
-          className="text-[11px] tracking-[0.35em]"
-          style={{ color: "var(--ink-faint)", fontFamily: "var(--font-latin)" }}
+          className="text-[11px] tracking-[0.25em]"
+          style={{ color: "var(--ink-faint)" }}
         >
-          {label.toUpperCase()}
+          {label}
         </span>
         <span className="flex-1" style={{ borderTop: "1px dashed color-mix(in oklch, var(--ink-faint) 30%, transparent)" }} />
       </div>
-      <h3
-        className="text-[16px] font-medium mb-3"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {label}
-      </h3>
       {children}
     </section>
   );

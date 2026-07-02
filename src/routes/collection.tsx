@@ -67,10 +67,10 @@ function CollectionPage() {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <span
-                        className="text-[10px] tracking-widest"
-                        style={{ color: "var(--ink-faint)", fontFamily: "var(--font-latin)" }}
+                        className="text-[10px] tracking-[0.2em]"
+                        style={{ color: "var(--ink-faint)" }}
                       >
-                        {c.domain.toUpperCase()}
+                        {c.domain}
                       </span>
                     </div>
                     <div
@@ -87,7 +87,7 @@ function CollectionPage() {
                       style={{ color: "var(--ink-faint)" }}
                     >
                       <span>3 天前收藏</span>
-                      <span style={{ fontFamily: "var(--font-latin)" }}>继续阅读 →</span>
+                      <span>继续阅读 →</span>
                     </div>
                   </div>
                 </Link>

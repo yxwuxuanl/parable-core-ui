@@ -238,10 +238,10 @@ function ConceptSection() {
               </div>
               <div className="mt-2">
                 <div
-                  className="text-[10px] tracking-widest"
-                  style={{ color: "var(--ink-faint)", fontFamily: "var(--font-latin)" }}
+                  className="text-[10px] tracking-[0.2em]"
+                  style={{ color: "var(--ink-faint)" }}
                 >
-                  {c.domain.toUpperCase()}
+                  {c.domain}
                 </div>
                 <h3
                   style={{ fontFamily: "var(--font-display)" }}
