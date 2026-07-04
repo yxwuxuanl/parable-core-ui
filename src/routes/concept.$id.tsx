@@ -65,33 +65,37 @@ function ConceptPage() {
       <CapsuleSafeArea />
 
       {/* Reveal header */}
-      <div className={`wash-${concept.wash ?? story.wash} px-6 pt-4 pb-8`}>
+      <div className={`wash-${concept.wash ?? story.wash} px-6 pt-5 pb-9`}>
         <div className="flex items-center gap-2" style={{ color: "var(--ink-faint)" }}>
-          <LeafMark className="h-3.5 w-3.5" />
+          <LeafMark className="h-3.5 w-3.5 shrink-0" />
           <span
             className="text-[10px] tracking-[0.35em]"
             style={{ fontFamily: "var(--font-latin)" }}
           >
             THE STORY IS ABOUT
           </span>
+          <span
+            className="text-[12px] leading-none"
+            style={{ fontFamily: "var(--font-display)", color: "var(--ink-faint)" }}
+          >
+            · 故事真正讲的是
+          </span>
         </div>
-        <p
-          className="mt-1 text-[13px] leading-tight"
-          style={{ fontFamily: "var(--font-display)", color: "var(--ink-soft)" }}
-        >
-          故事真正讲的是
-        </p>
 
-        <div
-          className="mt-4 text-[36px] font-medium leading-tight"
+        <h1
+          className="mt-4 text-[34px] font-medium leading-[1.15] tracking-tight"
           style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}
         >
           {concept.name}
-        </div>
-        <div className="mt-2">
-          <span className="ink-stamp">{concept.domain}</span>
-        </div>
-        <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+          <span className="ink-stamp align-middle ml-2 relative -top-[6px]">
+            {concept.domain}
+          </span>
+        </h1>
+
+        <p
+          className="mt-4 text-[15px] leading-[1.75]"
+          style={{ color: "var(--ink-soft)", fontFamily: "var(--font-display)" }}
+        >
           {concept.oneLiner}
         </p>
       </div>
