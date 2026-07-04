@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "shiyou-youyu-mcp",
+      "version": "0.1.0",
+      "title": "事出有喻 MCP"
+    },
+    "tools": [
+      {
+        "name": "list_concepts",
+        "title": "List concepts",
+        "description": "List all concepts (mental models / cognitive biases) available in 事出有喻, optionally filtered by domain.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "domain": {
+              "description": "Optional domain filter, e.g. '行为经济学', '社会心理学', '思维模型'.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_concept",
+        "title": "Get concept",
+        "description": "Get the full explanation of a concept by id, including definition, story-to-concept mapping, and example scenes.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Concept id, e.g. 'path-dependence', 'bandwagon', 'compound'."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_stories",
+        "title": "List stories",
+        "description": "List all parable-style stories, optionally filtered by domain.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "domain": {
+              "description": "Optional domain filter.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_story",
+        "title": "Get story",
+        "description": "Get the full text of a parable story by id, together with the concept it illustrates.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Story id, e.g. 'two-paths', 'riverside', 'small-seed'."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
