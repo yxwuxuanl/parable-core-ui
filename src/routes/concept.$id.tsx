@@ -88,6 +88,9 @@ function ConceptPage() {
         >
           {concept.name}
         </div>
+        <div className="mt-2">
+          <span className="ink-stamp">{concept.domain}</span>
+        </div>
         <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
           {concept.oneLiner}
         </p>
