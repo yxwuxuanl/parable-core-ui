@@ -75,40 +75,22 @@ function ConceptPage() {
             THE STORY IS ABOUT
           </span>
         </div>
-        <h1
-          className="mt-3 text-[28px] leading-tight font-medium"
-          style={{ fontFamily: "var(--font-display)" }}
+        <p
+          className="mt-1 text-[13px] leading-tight"
+          style={{ fontFamily: "var(--font-display)", color: "var(--ink-soft)" }}
         >
           故事真正讲的是
-        </h1>
+        </p>
 
-        <div className="mt-5 flex items-end gap-3">
-          <span className="ink-stamp shrink-0">{concept.domain}</span>
-        </div>
         <div
-          className="mt-3 text-[32px] font-medium leading-tight"
+          className="mt-4 text-[36px] font-medium leading-tight"
           style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}
         >
           {concept.name}
         </div>
-        <p className="mt-2 text-[15px] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+        <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
           {concept.oneLiner}
         </p>
-
-        {wrongGuess && (
-          <button
-            onClick={() => setWhyOpen(wrongGuess.id)}
-            className="mt-5 inline-flex items-center gap-2 text-[12px] px-3 py-2 rounded-full"
-            style={{
-              background: "color-mix(in oklch, var(--paper) 75%, transparent)",
-              color: "var(--ink-soft)",
-              border: "1px solid color-mix(in oklch, var(--ink-faint) 25%, transparent)",
-            }}
-          >
-            <span>为什么不是「{wrongGuess.name}」？</span>
-            <span style={{ color: "var(--ink-faint)" }}>→</span>
-          </button>
-        )}
       </div>
 
       {/* Definition */}
