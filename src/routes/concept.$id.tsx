@@ -95,9 +95,7 @@ function ConceptPage() {
 
       {/* Definition */}
       <Section label="具体解释">
-        <div
-          className="card-paper p-5"
-        >
+        <div className="card-paper p-5">
           <p
             className="text-[14.5px]"
             style={{ lineHeight: 1.9, color: "var(--ink)", fontFamily: "var(--font-display)" }}
@@ -117,6 +115,23 @@ function ConceptPage() {
           )}
         </div>
       </Section>
+
+      {wrongGuess && (
+        <div className="px-6 mt-5">
+          <button
+            onClick={() => setWhyOpen(wrongGuess.id)}
+            className="inline-flex items-center gap-2 text-[12px] px-3 py-2 rounded-full"
+            style={{
+              background: "color-mix(in oklch, var(--paper) 75%, transparent)",
+              color: "var(--ink-soft)",
+              border: "1px solid color-mix(in oklch, var(--ink-faint) 25%, transparent)",
+            }}
+          >
+            <span>为什么不是「{wrongGuess.name}」？</span>
+            <span style={{ color: "var(--ink-faint)" }}>→</span>
+          </button>
+        </div>
+      )}
 
       {/* Mapping */}
       {concept.mapping && (
