@@ -5,6 +5,21 @@ import { PhoneFrame, CapsuleSafeArea } from "@/components/AppShell";
 import { IllustrationBy, BrushLine, LeafMark } from "@/components/illustrations";
 import { getStory, getConcept, CONCEPTS } from "@/lib/mock-data";
 
+const READ_KEY = "shiyouyouyu_read";
+
+function markRead(id: string) {
+  try {
+    const raw = localStorage.getItem(READ_KEY) ?? "[]";
+    const ids: string[] = JSON.parse(raw);
+    if (!ids.includes(id)) {
+      ids.push(id);
+      localStorage.setItem(READ_KEY, JSON.stringify(ids));
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 export const Route = createFileRoute("/story/$id")({
   validateSearch: z.object({
     from: z.enum(["home", "concept"]).optional(),
@@ -30,6 +45,10 @@ function StoryPage() {
   const [showSheet, setShowSheet] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    markRead(id);
+  }, [id]);
 
   useEffect(() => {
     const el = scrollRef.current;
