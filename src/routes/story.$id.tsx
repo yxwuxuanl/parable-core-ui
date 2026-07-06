@@ -47,6 +47,10 @@ function StoryPage() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    markRead(id);
+  }, [id]);
+
+  useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const onScroll = () => setScrolled(el.scrollTop > 40);
