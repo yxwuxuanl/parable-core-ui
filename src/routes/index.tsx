@@ -63,9 +63,28 @@ function SearchBar() {
   );
 }
 
+const READ_KEY = "shiyouyouyu_read";
+
+function getReadIds(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem(READ_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
 function MainStoryDeck() {
   const [idx, setIdx] = useState(0);
+  const [readIds, setReadIds] = useState<string[]>([]);
   const story = STORIES[idx];
+  const isRead = readIds.includes(story.id);
+
+  useEffect(() => {
+    setReadIds(getReadIds());
+    const onStorage = () => setReadIds(getReadIds());
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
 
   return (
     <section className="px-6">
@@ -89,7 +108,7 @@ function MainStoryDeck() {
           boxShadow: "var(--shadow-paper)",
         }}
       >
-        <div className="px-5 pt-5">
+        <div className="px-5 pt-5 relative">
           <div className="flex items-center gap-2 text-[11px]" style={{ color: "var(--ink-soft)" }}>
             <span
               className="px-2 py-0.5 rounded-full"
@@ -102,15 +121,26 @@ function MainStoryDeck() {
             </span>
             <span style={{ color: "var(--ink-faint)" }}>· {story.minutes} 分钟</span>
           </div>
+          {isRead && (
+            <span
+              className="absolute top-5 right-5 flex items-center gap-1 text-[10px] tracking-wider"
+              style={{ color: "var(--ink-faint)" }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6 L 9 17 L 4 12" />
+              </svg>
+              已读
+            </span>
+          )}
           <h3
-            style={{ fontFamily: "var(--font-display)" }}
-            className="mt-3 text-[26px] font-medium leading-snug"
+            style={{ fontFamily: "var(--font-display)", opacity: isRead ? 0.65 : 1 }}
+            className="mt-3 text-[26px] font-medium leading-snug transition-opacity"
           >
             {story.title}
           </h3>
           <p
             className="mt-2 text-[13px] leading-relaxed"
-            style={{ color: "var(--ink-soft)" }}
+            style={{ color: "var(--ink-soft)", opacity: isRead ? 0.65 : 1 }}
           >
             {story.lede}
           </p>
@@ -123,10 +153,14 @@ function MainStoryDeck() {
         <div className="flex items-center justify-between px-5 pb-4 pt-1">
           <BeanDots total={STORIES.length} active={idx} />
           <span
-            className="text-[11px] tracking-widest"
-            style={{ color: "var(--ink-faint)", fontFamily: "var(--font-latin)" }}
+            className="text-[11px] tracking-widest flex items-center gap-1"
+            style={{ color: isRead ? "var(--ink-faint)" : "var(--ink-soft)", fontFamily: "var(--font-latin)" }}
           >
-            READ →
+            {isRead ? (
+              <>已读</>
+            ) : (
+              <>READ →</>
+            )}
           </span>
         </div>
       </Link>
