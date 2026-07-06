@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PhoneFrame, CapsuleSafeArea, BrandMark } from "@/components/AppShell";
 import { IllustrationBy, BrushLine } from "@/components/illustrations";
 import { STORIES, FEATURED_CONCEPTS, CONCEPTS, CATEGORIES } from "@/lib/mock-data";
